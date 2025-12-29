@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teams Simulation</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<h2>Teams</h2>
+<div class="card">
+<strong>Team 1:</strong> {{ team1|map(attribute='name')|join(", ") }}
+</div>
+<div class="card">
+<strong>Team 2:</strong> {{ team2|map(attribute='name')|join(", ") }}
+</div>
+
+<h3>Erklärung</h3>
+<p>{{ explanation }}</p>
+
+<h3>Fairness</h3>
+<p>{{ fairness }}%</p>
+
+<h3>Ergebnis eingeben</h3>
+<form action="/submit_result" method="post">
+<input type="hidden" name="team1" value="{{ team1|map(attribute='id')|join(',') }}">
+<input type="hidden" name="team2" value="{{ team2|map(attribute='id')|join(',') }}">
+Score Team 1: <input type="number" name="score1" required><br>
+Score Team 2: <input type="number" name="score2" required><br>
+<button type="submit">Ergebnis speichern & Rating aktualisieren</button>
+</form>
+
+<a href="/">← Zurück</a>
+</body>
+</html>

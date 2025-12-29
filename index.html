@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fussball Team Generator</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<h2>Spieler auswählen</h2>
+<form action="/teams/simulate" method="post">
+{% for p in players %}
+<label>
+<input type="checkbox" name="players" value="{{p.id}}"> {{p.name}} ({{p.rating}})
+</label><br>
+{% endfor %}
+<button type="submit">Teams generieren & simulieren</button>
+</form>
+
+<h3>Neuen Spieler hinzufügen</h3>
+<form action="/add_player" method="post">
+<input type="text" name="name" placeholder="Spielername" required>
+<button type="submit">Hinzufügen</button>
+</form>
+
+<a href="/dashboard">📊 Dashboard</a>
+</body>
+</html>

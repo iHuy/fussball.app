@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<h2>Dashboard</h2>
+
+<h3>Fairness & Chemie über Zeit</h3>
+<canvas id="fairnessChart"></canvas>
+<canvas id="chemistryChart"></canvas>
+
+<script>
+const fairnessData = {{ charts_data.fairness_over_time | safe }};
+const chemistryData = {{ charts_data.chemistry_over_time | safe }};
+
+new Chart(document.getElementById('fairnessChart'), {
+    type: 'line',
+    data: {
+        labels: fairnessData.map((_,i)=>i+1),
+        datasets:[{label:'Fairness %', data: fairnessData, borderColor:'blue', fill:false}]
+    }
+});
+
+new Chart(document.getElementById('chemistryChart'), {
+    type: 'line',
+    data: {
+        labels: chemistryData.map((_,i)=>i+1),
+        datasets:[{label:'Chemie %', data: chemistryData, borderColor:'green', fill:false}]
+    }
+});
+</script>
+
+<h3>Spieler-Ratings</h3>
+<ul>
+{% for p in players %}
+<li>{{ p.name }}: {{ p.rating|round(1) }} (Unsicherheit: {{ p.uncertainty|round(1) }})</li>
+{% endfor %}
+</ul>
+
+<a href="/">← Zurück</a>
+</body>
+</html>
